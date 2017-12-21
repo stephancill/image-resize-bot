@@ -35,7 +35,7 @@ def chat_handler(msg):
         else:
             return
     elif msg_type == "photo":
-        file_id = msg["photo"][2]["file_id"]
+        file_id = msg["photo"][-1]["file_id"]
     else:
         return
 
