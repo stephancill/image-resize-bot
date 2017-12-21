@@ -54,6 +54,9 @@ def chat_handler(msg):
     os.remove(new_file_path)
 
 if __name__ == "__main__":
+    if not os.path.exists("downloads"):
+        os.makedirs("downloads")
+
     # Instantiate bot
     bot = telepot.Bot(BOT_TOKEN)
 
