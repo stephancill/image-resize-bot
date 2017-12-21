@@ -21,7 +21,7 @@ def resize_image(path):
     img = Image.open(path)
     ratio = 512/max(img.size)
     new_size = (int(img.size[0]*ratio), int(img.size[1]*ratio))
-    img = img.resize(new_size, Image.NEAREST)
+    img = img.resize(new_size, Image.ANTIALIAS)
     img.save(path + ".png", "png")
     return path + ".png"
 
@@ -30,14 +30,12 @@ def chat_handler(msg):
 
     # Handle compressed/uncompressed images
     if msg_type == "document":
-        print(msg["document"]["mime_type"])
         if msg["document"]["mime_type"] in ["image/png", "image/jpeg"]:
             file_id = msg["document"]["file_id"]
         else:
             return
     elif msg_type == "photo":
-        print(msg["photo"][0])
-        file_id = msg["photo"][0]["file_id"]
+        file_id = msg["photo"][2]["file_id"]
     else:
         return
 
@@ -56,10 +54,10 @@ def chat_handler(msg):
     os.remove(new_file_path)
 
 if __name__ == "__main__":
-    #make our bot and feed it the tokenhend
+    # Instantiate bot
     bot = telepot.Bot(BOT_TOKEN)
 
-    #fetch messages and keep script looped
+    # New message listener
     bot.message_loop({'chat' : chat_handler},
                       run_forever="Bot Running...")
 
