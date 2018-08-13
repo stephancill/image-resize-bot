@@ -28,6 +28,13 @@ def resize_image(path):
 def chat_handler(msg):
     msg_type, chat_type, chat_id = telepot.glance(msg)
 
+    if "reply_to_message" in msg and "/crop" in msg["text"]:
+        msg = msg["reply_to_message"]
+        msg_type, chat_type, chat_id = telepot.glance(msg)
+    elif not msg_type in ["document", "photo"]:
+        return
+
+
     # Handle compressed/uncompressed images
     if msg_type == "document":
         if msg["document"]["mime_type"] in ["image/png", "image/jpeg"]:
@@ -35,7 +42,7 @@ def chat_handler(msg):
         else:
             return
     elif msg_type == "photo":
-        file_id = msg["photo"][2]["file_id"]
+        file_id = msg["photo"][-1]["file_id"]
     else:
         return
 
