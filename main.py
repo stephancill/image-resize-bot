@@ -17,6 +17,16 @@ except KeyError:
 endpoint = f'https://api.telegram.org/bot{BOT_TOKEN}'
 file_endpoint = f'https://api.telegram.org/file/bot{BOT_TOKEN}'
 
+def inc_uses():
+    try:
+        with open("uses.txt") as f:
+            uses = int(f.read().split("\n")[0].strip())
+    except:
+        uses = 0
+    
+    with open("uses.txt", "w") as f:
+        f.write(str(uses+1))
+
 def resize_image(path):
     img = Image.open(path)
     ratio = 512/max(img.size)
@@ -55,6 +65,8 @@ def chat_handler(msg):
     new_file_path = resize_image(file_path)
     with open(new_file_path, "rb") as f:
         bot.sendDocument(chat_id, f)
+    
+    inc_uses()
 
     # Clean up working directory
     os.remove(file_path)

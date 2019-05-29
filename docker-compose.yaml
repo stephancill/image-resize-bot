@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  bot:
+    build: .
+    env_file: docker.env
+    command: pipenv run python -u main.py # -u allows for debugging in stdout
+    volumes:
+      - .:/app
+    restart: always
