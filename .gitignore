@@ -1,5 +1,4 @@
 .vscode/
 downloads/
-Pipfile.lock
 uses.txt
 docker.env
