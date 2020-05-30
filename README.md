@@ -3,5 +3,5 @@ Telegram bot that resizes images for sides to be at most 512px maintaining aspec
 
 ## Usage
 * Clone the repo
-* Edit `docker.env`
+* `cp docker.sample.env docker.env` and edit docker.env
 * Run `docker-compose up`
